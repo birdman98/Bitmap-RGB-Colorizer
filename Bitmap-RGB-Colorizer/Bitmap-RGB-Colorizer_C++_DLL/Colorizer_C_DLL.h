@@ -9,4 +9,4 @@
 #include <string>
 
 
-extern "C" COLORIZER_C_DLL_API void processBitmap(unsigned char* bitmap, const int &height, const int &width, const std::string &color);
+extern "C" COLORIZER_C_DLL_API void processBitmap(unsigned char* bitmap, const int &begin, const int &end, const char &color);
