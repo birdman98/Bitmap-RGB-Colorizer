@@ -22,16 +22,19 @@ Rcolor:
 	movdqu xmm1, xmmword ptr [mask1]
 	movdqu xmm2, xmmword ptr [mask2]
 	movdqu xmm3, xmmword ptr [mask3]
+	mov r15d, 3
 	jmp Prepare
 GColor:
 	movdqu xmm1, xmmword ptr [mask2]
 	movdqu xmm2, xmmword ptr [mask3]
 	movdqu xmm3, xmmword ptr [mask1]
+	mov r15d, 2
 	jmp Prepare
 BColor:
 	movdqu xmm1, xmmword ptr [mask3]
 	movdqu xmm2, xmmword ptr [mask1]
 	movdqu xmm3, xmmword ptr [mask2]
+	mov r15d, 1
 	jmp Prepare
 
 Prepare:
@@ -73,12 +76,133 @@ continue:
 	add rsi, 16
 	cmp rdi, rsi
 	je endProcessing ;if end of bitmap reached, end processing
-	;jb editRemainingPixels ;if not, remaining pixels should be processed
+	jb editRemainingPixels ;if not, remaining pixels should be processed
 
 zero:
 	mov r14d, 0
 	jmp continue 
-	
+
+
+;for editing remaining pixels:
+
+editRemainingPixels:
+	mov r13b, 0 ;counter of iterations for remaining pixels
+	cmp r14d, 0 
+	je startFromB ;first remaining pixel will be B
+	cmp r14d, 1
+	je startFromG ;first remaining pixel will be G
+	cmp r14d, 2
+	je startFromR ;first remaining pixel will be R
+
+startFromB:
+	cmp r15d, 3
+	je RColorizingWithFirstB ;R colorizing was chosen
+	cmp r15d, 2
+	je GColorizingWithFirstB ;G colorizing was chosen
+	cmp r15d, 1
+	je BColorizingWithFirstB ;B colorizing was chosen
+RColorizingWithFirstB:
+	mov r10b, 0 ;define three bit masks for this case
+	mov r11b, 0
+	mov r12b, 255
+	jmp ProcessRemainingPixels
+GColorizingWithFirstB:
+	mov r10b, 0 ;define three bit masks for this case
+	mov r11b, 255
+	mov r12b, 0
+	jmp ProcessRemainingPixels
+BColorizingWithFirstB:
+	mov r10b, 255 ;define three bit masks for this case
+	mov r11b, 0
+	mov r12b, 0
+	jmp ProcessRemainingPixels
+
+startFromG:
+	cmp r15d, 3 
+	je RColorizingWithFirstG ;R colorizing was chosen
+	cmp r15d, 2
+	je GColorizingWithFirstG ;G colorizing was chosen
+	cmp r15d, 1
+	je BColorizingWithFirstG ;B colorizing was chosen
+RColorizingWithFirstG:
+	mov r10b, 0 ;define three bit masks for this case
+	mov r11b, 255
+	mov r12b, 0
+	jmp ProcessRemainingPixels
+GColorizingWithFirstG:
+	mov r10b, 255 ;define three bit masks for this case
+	mov r11b, 0
+	mov r12b, 0
+	jmp ProcessRemainingPixels
+BColorizingWithFirstG:
+	mov r10b, 0 ;define three bit masks for this case
+	mov r11b, 0
+	mov r12b, 255
+	jmp ProcessRemainingPixels
+
+startFromR:
+	cmp r15d, 3
+	je RColorizingWithFirstR ;R colorizing was chosen
+	cmp r15d, 2
+	je GColorizingWithFirstR ;G colorizing was chosen
+	cmp r15d, 1
+	je BColorizingWithFirstR ;B colorizing was chosen
+RColorizingWithFirstR:
+	mov r10b, 255 ;define three bit masks for this case
+	mov r11b, 0
+	mov r12b, 0
+	jmp ProcessRemainingPixels
+GColorizingWithFirstR:
+	mov r10b, 0 ;define three bit masks for this case
+	mov r11b, 0
+	mov r12b, 255
+	jmp ProcessRemainingPixels
+BColorizingWithFirstR:
+	mov r10b, 0 ;define three bit masks for this case
+	mov r11b, 255
+	mov r12b, 0
+	jmp ProcessRemainingPixels
+
+
+;right algorithm for processing remaining pixels:
+
+ProcessRemainingPixels:
+	inc r13b ;increment iterations counter
+	mov r8b, byte ptr[rcx + rdi] ;move value from bitmap array to r8b
+	cmp r13b, 1
+	je firstIteration
+	cmp r13b, 2
+	je secondIteration
+	cmp r13b, 3
+	je thirdIteration
+
+firstIteration:
+	and r8b, r10b ;do logical AND on value from bitmap with bit mask in r10b
+	jmp nextStep
+
+secondIteration:
+	and r8b, r11b ;do logical AND on value from bitmap with bit mask in r11b
+	jmp nextStep
+
+thirdIteration:
+	and r8b, r12b ;do logical AND on value from bitmap with bit mask in r12b
+	jmp nextStep
+
+nextStep:
+	mov byte ptr[rcx + rdi], r8b ;move processed value from r8b back to bitmap array
+	cmp r13b, 3
+	je zeroCounter
+
+continueProcessing:
+	inc rdi
+	cmp rdi, rsi
+	je endProcessing ;if all remaining pixels was processed, end algorithm
+	jmp ProcessRemainingPixels ;continue processing remaining pixels
+
+zeroCounter:
+	mov r13b, 0
+	jmp continueProcessing
+
 endProcessing:
 	ret
 processBitmapInAsm endp
