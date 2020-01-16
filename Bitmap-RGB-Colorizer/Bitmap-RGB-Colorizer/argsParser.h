@@ -10,7 +10,8 @@ public:
 
 	static char colorizing;
 	static std::string inputFilePath;
-	static std::string outputFilePath;
+	static std::string outputFilePathForAsm;
+	static std::string outputFilePathForC;
 	static int threadsNumber;
 	static bool assembly;
 	static bool cPlusPlus;
