@@ -74,11 +74,11 @@ bool Args::parseArgs(int argc, char** argv) {
 
 void Args::printHelp() {
 	std::cout << "\nUsage of program:\n\n"
-		<< "-c [R, G, B]                 - color to colorize bitmap\n"
-		<< "-i inputFilePath.bmp         - path to input bitmap file\n"
-		<< "-oC outputFilePathForC.bmp   - path to output (colorized) bitmap by C++ algorithm\n"
-		<< "-oA outputFilePathForAsm.bmp - path to output (colorized) bitmap by Assembly algorithm\n"		
-		<< "-t [0-64]                    - number of threads as number within 0-64 range\n"
-		<< "-A                           - if present, assembly algorithm will be used\n"
-		<< "-C                           - if present, C++ algorithm will be used\n\n";
+		<< "-c [R, G, B]                 - color to colorize bitmap (default 'R')\n"
+		<< "-i inputFilePath.bmp         - path to input bitmap file (default test.bmp)\n"
+		<< "-oC outputFilePathForC.bmp   - path to output (colorized) bitmap by C++ algorithm (default test_out_cpp.bmp)\n"
+		<< "-oA outputFilePathForAsm.bmp - path to output (colorized) bitmap by Assembly algorithm (default test_out_asm.bmp)\n"		
+		<< "-t [0-64]                    - number of threads as number within 0-64 range (default number of CPU threads)\n"
+		<< "-A                           - if present, assembly algorithm will be used (default no)\n"
+		<< "-C                           - if present, C++ algorithm will be used\n\n (default no)\n";
 }
