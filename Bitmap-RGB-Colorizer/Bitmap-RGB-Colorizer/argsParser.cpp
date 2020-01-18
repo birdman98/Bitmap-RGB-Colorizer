@@ -7,7 +7,7 @@ char Args::colorizing = 'R';
 std::string Args::inputFilePath = "test.bmp";
 std::string Args::outputFilePathForAsm = "test_out_asm.bmp";
 std::string Args::outputFilePathForC = "test_out_cpp.bmp";
-int Args::threadsNumber = 4;
+int Args::threadsNumber = 0;
 bool Args::assembly = false;
 bool Args::cPlusPlus = false;
 
@@ -55,10 +55,10 @@ bool Args::parseArgs(int argc, char** argv) {
 				if(threads >= 0 && threads <= 64) {
 					threadsNumber = threads;					
 				} else {
-					std::cerr << "Wrong number of threads specified! Default 4 threads will be used!\n";
+					std::cerr << "Wrong number of threads specified! Optimal number of threads for your CPU will be used!\n";
 				}				
 			} catch (const std::out_of_range &exception) {
-				std::cerr << "Number of threads parameter not properly passed! Default 4 threads will be used!\n";
+				std::cerr << "Number of threads parameter not properly passed! Optimal number of threads for your CPU will be used!\n";
 			}	
 		} else if(temp == "-A") {
 			assembly = true;
