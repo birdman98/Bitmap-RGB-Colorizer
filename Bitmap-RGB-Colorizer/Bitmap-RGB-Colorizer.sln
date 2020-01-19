@@ -1,0 +1,55 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.489
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Bitmap-RGB-Colorizer", "Bitmap-RGB-Colorizer\Bitmap-RGB-Colorizer.vcxproj", "{426DEB0D-174D-4835-BF90-9AF73284728B}"
+	ProjectSection(ProjectDependencies) = postProject
+		{6D5A015A-214C-4289-8CD1-A446CB92898F} = {6D5A015A-214C-4289-8CD1-A446CB92898F}
+		{437C08B4-5C15-4F17-873A-A50BE00626AD} = {437C08B4-5C15-4F17-873A-A50BE00626AD}
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Colorizer_C_DLL", "Bitmap-RGB-Colorizer_C++_DLL\Bitmap-RGB-Colorizer_C++_DLL.vcxproj", "{437C08B4-5C15-4F17-873A-A50BE00626AD}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Colorizer_ASM_DLL", "Colorizer_ASM_DLL\Colorizer_ASM_DLL.vcxproj", "{6D5A015A-214C-4289-8CD1-A446CB92898F}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x64 = Debug|x64
+		Debug|x86 = Debug|x86
+		Release|x64 = Release|x64
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{426DEB0D-174D-4835-BF90-9AF73284728B}.Debug|x64.ActiveCfg = Debug|x64
+		{426DEB0D-174D-4835-BF90-9AF73284728B}.Debug|x64.Build.0 = Debug|x64
+		{426DEB0D-174D-4835-BF90-9AF73284728B}.Debug|x86.ActiveCfg = Debug|Win32
+		{426DEB0D-174D-4835-BF90-9AF73284728B}.Debug|x86.Build.0 = Debug|Win32
+		{426DEB0D-174D-4835-BF90-9AF73284728B}.Release|x64.ActiveCfg = Release|x64
+		{426DEB0D-174D-4835-BF90-9AF73284728B}.Release|x64.Build.0 = Release|x64
+		{426DEB0D-174D-4835-BF90-9AF73284728B}.Release|x86.ActiveCfg = Release|Win32
+		{426DEB0D-174D-4835-BF90-9AF73284728B}.Release|x86.Build.0 = Release|Win32
+		{437C08B4-5C15-4F17-873A-A50BE00626AD}.Debug|x64.ActiveCfg = Debug|x64
+		{437C08B4-5C15-4F17-873A-A50BE00626AD}.Debug|x64.Build.0 = Debug|x64
+		{437C08B4-5C15-4F17-873A-A50BE00626AD}.Debug|x86.ActiveCfg = Debug|Win32
+		{437C08B4-5C15-4F17-873A-A50BE00626AD}.Debug|x86.Build.0 = Debug|Win32
+		{437C08B4-5C15-4F17-873A-A50BE00626AD}.Release|x64.ActiveCfg = Release|x64
+		{437C08B4-5C15-4F17-873A-A50BE00626AD}.Release|x64.Build.0 = Release|x64
+		{437C08B4-5C15-4F17-873A-A50BE00626AD}.Release|x86.ActiveCfg = Release|Win32
+		{437C08B4-5C15-4F17-873A-A50BE00626AD}.Release|x86.Build.0 = Release|Win32
+		{6D5A015A-214C-4289-8CD1-A446CB92898F}.Debug|x64.ActiveCfg = Debug|x64
+		{6D5A015A-214C-4289-8CD1-A446CB92898F}.Debug|x64.Build.0 = Debug|x64
+		{6D5A015A-214C-4289-8CD1-A446CB92898F}.Debug|x86.ActiveCfg = Debug|Win32
+		{6D5A015A-214C-4289-8CD1-A446CB92898F}.Debug|x86.Build.0 = Debug|Win32
+		{6D5A015A-214C-4289-8CD1-A446CB92898F}.Release|x64.ActiveCfg = Release|x64
+		{6D5A015A-214C-4289-8CD1-A446CB92898F}.Release|x64.Build.0 = Release|x64
+		{6D5A015A-214C-4289-8CD1-A446CB92898F}.Release|x86.ActiveCfg = Release|Win32
+		{6D5A015A-214C-4289-8CD1-A446CB92898F}.Release|x86.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {1F8CBFB8-EBCF-4A94-9CEA-C0D23FB7DA56}
+	EndGlobalSection
+EndGlobal
