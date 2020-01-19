@@ -80,5 +80,5 @@ void Args::printHelp() {
 		<< "-oA outputFilePathForAsm.bmp - path to output (colorized) bitmap by Assembly algorithm (default test_out_asm.bmp)\n"		
 		<< "-t [0-64]                    - number of threads as number within 0-64 range (default number of CPU threads)\n"
 		<< "-A                           - if present, assembly algorithm will be used (default no)\n"
-		<< "-C                           - if present, C++ algorithm will be used\n\n (default no)\n";
+		<< "-C                           - if present, C++ algorithm will be used (default no)\n";
 }
