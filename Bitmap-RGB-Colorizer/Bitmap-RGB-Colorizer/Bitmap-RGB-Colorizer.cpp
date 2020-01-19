@@ -39,6 +39,7 @@ int main(int argc, char** argv) {
 		int end = 0;
 		char pixelSpecifier = 0;
 
+		auto start = std::chrono::high_resolution_clock::now();
 		for (int i = 0; i < Args::threadsNumber; ++i) {
 			begin = i * (bmpController.getSizeOfBitmapPixels() / Args::threadsNumber);
 			end = (i + 1) * (bmpController.getSizeOfBitmapPixels() / Args::threadsNumber);
@@ -47,7 +48,6 @@ int main(int argc, char** argv) {
 			threadsForAsm[i] = std::thread(processBitmapInAsm, bitmapPixelsForAsm, begin, end, pixelSpecifier);
 		}
 
-		auto start = std::chrono::high_resolution_clock::now();
 		for (int i = 0; i < Args::threadsNumber; ++i) {
 			threadsForAsm[i].join();
 		}
@@ -73,6 +73,7 @@ int main(int argc, char** argv) {
 		int begin = 0;
 		int end = 0;
 
+		auto start = std::chrono::high_resolution_clock::now();
 		for(int i = 0; i < Args::threadsNumber; ++i) {
 			begin = i * (bmpController.getSizeOfBitmapPixels() / Args::threadsNumber);
 			end = (i + 1) * (bmpController.getSizeOfBitmapPixels() / Args::threadsNumber);
@@ -80,7 +81,6 @@ int main(int argc, char** argv) {
 			threadsForC[i] = std::thread(processBitmap, bitmapPixelsForC, begin, end, Args::colorizing);
 		}
 
-		auto start = std::chrono::high_resolution_clock::now();
 		for(int i = 0; i <Args::threadsNumber; ++i) {
 			threadsForC[i].join();
 		}
