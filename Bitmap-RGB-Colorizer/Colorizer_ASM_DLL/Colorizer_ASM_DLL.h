@@ -5,5 +5,5 @@
 
 __pragma(comment(linker, "/export:processBitmapInAsm"));
 
-extern "C" __declspec(dllexport) unsigned char* __stdcall processBitmapInAsm(unsigned char* bitmap, int height, int width, /*std::string*/char color);
+extern "C" __declspec(dllexport) void __stdcall processBitmapInAsm(unsigned char* bitmap, int begin, int end, char pixelSpecifier);
 
