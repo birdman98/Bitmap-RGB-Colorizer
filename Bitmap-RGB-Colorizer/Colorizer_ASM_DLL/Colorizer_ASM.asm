@@ -145,14 +145,14 @@ zero:
 
 ;for editing remaining pixels:
 
-editRemainingPixels: ;zdefiniowac kolejne przypadki, od ktorego piksela zaczynamy
+editRemainingPixels:
 	mov r13b, 0 ;counter of iterations for remaining pixels
 	
 	cmp bl, 1 ;processing started with B value
 	je startedWithB
-	cmp bl, 2
+	cmp bl, 2 ;processing started with G value
 	je startedWithG
-	cmp bl, 3
+	cmp bl, 3 ;processing started with R value
 	je startedWithR
 
 startedWithB:
