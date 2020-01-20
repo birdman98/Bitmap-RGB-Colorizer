@@ -98,50 +98,46 @@ BColor:
 
 Prepare:
 	mov rax, rcx ;save pointer to bitmap
-	mov rsi, rdx ;save beginning of the bitmap - second parameter passed to procedure, end of the bitmap - third parameter passed to procedure is stored in r8 register
-	mov r14d, 0 ;initialize register with 0 - this value will be used to determine which iteration is currently (first, second or third) and which bit mask should be used
+	mov rsi, rdx ;save beginning of the bitmap - second parameter passed to procedure; end of the bitmap - third parameter passed to procedure is stored in r8 register
+	xor r14d, r14d ;initialize register with 0 - this value will be used to determine which iteration is currently (first, second or third) and which bit mask should be used
 	cmp r8, 16 ;check if already less than 16 values should be processed
 	jb editRemainingPixels
-	sub r8, 16 ;substract 16 from end of the bitmap to be sure if every time 16 values from bitmap can be moved to xmm0 register
+	sub r8, 16 ;substract 16 from end of the bitmap to be sure if every time at least 16 values from bitmap can be moved to xmm0 register
 changePixels:
 	inc r14d ;increment counter of iterations
 	movdqu xmm0, xmmword ptr[rax + rsi] ;move from bitmap array 16 values (128 bits) to xmm0 register
-	cmp r14d, 1 ;if this is first iteration jump to "first" label
-	je first
-	cmp r14d, 2 ;if this is second iteration jump to "second" label
-	je second
-	cmp r14d, 3 ;if this is third iteration jump to "third" label
-	je third
-
-first:
 	pand xmm0, xmm1 ;do logical AND on xmm0 register with bit mask in xmm1 register
-	jmp next
-second:
-	pand xmm0, xmm2 ;do logical AND on xmm0 register with bit mask in xmm2 register
-	jmp next
-third:
-	pand xmm0, xmm3 ;do logical AND on xmm0 register with bit mask in xmm3 register
-	jmp next
-
-next:
 	movdqu xmmword ptr[rax + rsi], xmm0 ;move processed values from xmm0 register back to bitmap array
-	cmp r14d, 3 ;check if this is third iteration and if it is, jump to "zero" label
-	je zero
+	add rsi, 16 ;add 16 to beginning of the bitmap to process next 16 values
+	cmp rsi, r8
+	jb second ;if end of bitmap not reached, process next values
+	jmp checkIfEnd ;if not, jump to checkIfEnd label
 
-continue:
+second: 	
+	inc r14d ;increment counter of iterations
+	movdqu xmm4, xmmword ptr[rax + rsi] ;move from bitmap array 16 values (128 bits) to xmm4 register
+	pand xmm4, xmm2 ;do logical AND on xmm4 register with bit mask in xmm2 register
+	movdqu xmmword ptr[rax + rsi], xmm4 ;move processed values from xmm4 register back to bitmap array
+	add rsi, 16 ;add 16 to beginning of the bitmap to process next 16 values
+	cmp rsi, r8
+	jb third ;if end of bitmap not reached, process next values
+	jmp checkIfEnd ;if not, jump to checkIfEnd label
+
+third:
+	inc r14d ;increment counter of iterations
+	movdqu xmm5, xmmword ptr[rax + rsi] ;move from bitmap array 16 values (128 bits) to xmm5 register
+	pand xmm5, xmm3 ;do logical AND on xmm5 register with bit mask in xmm3 register
+	movdqu xmmword ptr[rax + rsi], xmm5 ;move processed values from xmm5 register back to bitmap array
+	xor r14d, r14d ;zero counter of iterations
 	add rsi, 16 ;add 16 to beginning of the bitmap to process next 16 values
 	cmp rsi, r8
 	jb changePixels ;if end of bitmap not reached, process next pixels
-	
+
+checkIfEnd:
 	add r8, 16 ;add 16 back to end of the bitmap
 	cmp rsi, r8
 	je endProcessing ;if end of bitmap reached, end processing
 	jb editRemainingPixels ;if not, remaining pixels should be processed
-
-zero:
-	mov r14d, 0
-	jmp continue 
-
 
 ;for editing remaining pixels:
 
@@ -282,7 +278,7 @@ continueProcessing:
 	jmp ProcessRemainingPixels ;continue processing remaining pixels
 
 zeroCounter:
-	mov r13b, 0
+	xor r13b, r13b
 	jmp continueProcessing
 
 endProcessing:
